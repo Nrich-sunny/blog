@@ -74,7 +74,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
 
     // 博主信息 (显示在首页侧边栏)
     blogger: {
-      avatar: 'https://cdn.jsdelivr.net/gh/xugaoyi/image_store/blog/20200103123203.jpg',
+      avatar: 'https://blog-1310567564.cos.ap-beijing.myqcloud.com/head.jpg',
       name: 'Nrich',
       slogan: '小聪明',
     },
