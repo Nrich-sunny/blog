@@ -11,8 +11,8 @@ features: # 可选的
   - title: 开发
     details: java等后端技术
     imgUrl: /img/milkdragon.jpeg # 可选
-  - title: 机器学习
-    details: 
+  - title: AI
+    details: 深度学习等学习笔记
     imgUrl: /img/ui.png
   - title: 技术
     details: 技术文档、教程、技巧、总结等文章
