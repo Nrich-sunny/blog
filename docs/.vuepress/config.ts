@@ -27,7 +27,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     // 导航配置
     nav: nav,
     sidebarDepth: 2, // 侧边栏显示深度，默认1，最大2（显示到h3标题）
-    logo: '/img/logo.png', // 导航栏logo
+    logo: '/img/mylogo.jpeg', // 导航栏logo
     repo: 'n7301/blog', // 导航栏右侧生成Github链接
     searchMaxSuggestions: 10, // 搜索结果显示最大数
     lastUpdated: '上次更新', // 开启更新时间，并配置前缀文字   string | boolean (取值为git提交时间)
@@ -69,7 +69,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     // 文章默认的作者信息，(可在md文件中单独配置此信息) string | {name: string, link?: string}
     author: {
       name: 'Nrich', // 必需
-      link: 'https://github.com/n7301', // 可选的
+      link: 'https://github.com/Nrich-sunny', // 可选的
     },
 
     // 博主信息 (显示在首页侧边栏)
@@ -86,7 +86,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         {
           iconClass: 'icon-github',
           title: 'GitHub',
-          link: 'https://github.com/n7301',
+          link: 'https://github.com/Nrich-sunny',
         },
       ],
     },
@@ -104,7 +104,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
 
   // 注入到页面<head>中的标签，格式[tagName, { attrName: attrValue }, innerHTML?]
   head: [
-    ['link', { rel: 'icon', href: '/img/favicon.ico' }], //favicons，资源放在public文件夹
+    ['link', { rel: 'icon', href: '/img/bitbug_favicon.ico' }], //favicons，资源放在public文件夹
     [
       'meta',
       {
@@ -112,7 +112,6 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         content: '前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown',
       },
     ],
-    ['meta', { name: 'baidu-site-verification', content: '7F55weZDDc' }], // 百度统计的站长验证（你可以去掉）
     ['meta', { name: 'theme-color', content: '#11a8cd' }], // 移动浏览器主题颜色
     // [
     //   'script',

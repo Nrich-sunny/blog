@@ -4,6 +4,13 @@ export default [
         text: '开发', 
         items: [
             { text: 'Java', link: '/java/' },
-        ]
+        ],
     },
+    {
+        text: 'AI',
+        items: [
+            { text: '深度学习', link: '/deep-learning/' },  //目录页的link
+        ],
+    }
+    
 ]
