@@ -18,6 +18,12 @@ export default [
             { text: 'Git', link: '/git/' }, 
             { text: 'Linux', link: '/linux/' }, 
         ],
+    },
+    {
+        text: '网络',
+        items: [
+            { text: '路由劫持', link: '/route-hijack/' }, 
+        ],
     }
     
 ]
