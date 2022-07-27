@@ -4,6 +4,7 @@ export default [
         text: '开发', 
         items: [
             { text: 'Java', link: '/java/' },
+            { text: 'Golang', link: '/go/' },
         ],
     },
     {
