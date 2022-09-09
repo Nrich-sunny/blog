@@ -1,0 +1,657 @@
+## 目录
+
+*   [什么是 Linux](#什么是-linux)
+
+    *   [Linux 系统内核与 Linux 发行套件的区别](#linux-系统内核与-linux-发行套件的区别)
+
+    *   [Linux 系统种类](#linux-系统种类)
+
+*   [Shell](#shell)
+
+*   [命令](#命令)
+
+    *   [命令行提示符](#命令行提示符)
+
+*   [文件和目录](#文件和目录)
+
+    *   [文件的组织](#文件的组织)
+
+    *   [查看路径](#查看路径)
+
+        *   [pwd](#pwd)
+
+        *   [which](#which)
+
+    *   [浏览和切换目录](#浏览和切换目录)
+
+        *   [ls](#ls)
+
+        *   [cd](#cd)
+
+        *   [du](#du)
+
+    *   [浏览和创建文件](#浏览和创建文件)
+
+        *   [cat](#cat)
+
+        *   [less](#less)
+
+        *   [head](#head)
+
+        *   [tail](#tail)
+
+        *   [touch](#touch)
+
+        *   [mkdir](#mkdir)
+
+    *   [文件的复制和移动](#文件的复制和移动)
+
+        *   [cp](#cp)
+
+        *   [mv](#mv)
+
+    *   [文件的删除和链接](#文件的删除和链接)
+
+        *   [rm](#rm)
+
+        *   [ln](#ln)
+
+        *   [硬链接](#硬链接)
+
+        *   [软链接](#软链接)
+
+*   [用户与权限](#用户与权限)
+
+    *   [用户](#用户)
+
+        *   [sudo](#sudo)
+
+        *   [useradd + passwd](#useradd--passwd)
+
+        *   [userdel](#userdel)
+
+        *   [su](#su)
+
+    *   [群组的管理](#群组的管理)
+
+        *   [groupadd](#groupadd)
+
+        *   [groupdel](#groupdel)
+
+        *   [groups](#groups)
+
+        *   [usermod](#usermod)
+
+        *   [chgrp](#chgrp)
+
+        *   [chown](#chown)
+
+    *   [文件权限管理](#文件权限管理)
+
+        *   [chmod](#chmod)
+
+        *   [数字分配权限](#数字分配权限)
+
+        *   [用字母来分配权限](#用字母来分配权限)
+
+*   [查找文件](#查找文件)
+
+    *   [locate](#locate)
+
+        *   [安装 locate](#安装-locate)
+
+    *   [find](#find)
+
+        *   [根据文件名查找](#根据文件名查找)
+
+        *   [根据文件大小查找](#根据文件大小查找)
+
+        *   [根据文件最近访问时间查找](#根据文件最近访问时间查找)
+
+        *   [仅查找目录或文件](#仅查找目录或文件)
+
+        *   [操作查找结果](#操作查找结果)
+
+# 带你实现Linux命令自由
+
+来自——小夕学算法
+
+***
+
+## 什么是 Linux
+
+### Linux 系统内核与 Linux 发行套件的区别
+
+*   `Linux` 系统内核指的是由 `Linus Torvalds` 负责维护，提供硬件抽象层、硬盘及文件系统控制及多任务功能的系统核心程序。
+
+*   `Linux` 发行套件系统是我们常说的 `Linux` 操作系统，也即是由 `Linux` 内核与各种常用软件的集合产品。
+
+**总结：真正的  指的是系统内核，而我们常说的  指的是“发行版完整的包含一些基础软件的操作系统”。**
+
+### Linux 系统种类
+
+*   红帽企业版 `Linux` ：`RHEL` 是全世界内使用最广泛的 `Linux` 系统。它具有极强的性能与稳定性，是众多生成环境中使用的（收费的）系统。
+
+*   `Fedora` ：由红帽公司发布的桌面版系统套件，用户可以免费体验到最新的技术或工具，这些技术或工具在成熟后会被加入到 `RHEL` 系统中，因此 `Fedora` 也成为 `RHEL` 系统的试验版本。
+
+*   `CentOS` ：通过把 `RHEL` 系统重新编译并发布给用户免费使用的 `Linux` 系统，具有广泛的使用人群。
+
+*   `Deepin` ：中国发行，对优秀的开源成品进行集成和配置。
+
+*   `Debian` ：稳定性、安全性强，提供了免费的基础支持，在国外拥有很高的认可度和使用率。
+
+*   `Ubuntu` ：是一款派生自 `Debian` 的操作系统，对新款硬件具有极强的兼容能力。`Ubuntu` 与 `Fedora` 都是极其出色的 `Linux` 桌面系统，而且 `Ubuntu` 也可用于服务器领域。
+
+## Shell
+
+`Shell` 这个单词的原意是“外壳”，跟 `kernel`（内核）相对应，比喻内核外面的一层，即用户跟内核交互的对话界面。
+
+*   `Shell` 是一个程序，提供一个与用户对话的环境。这个环境只有一个命令提示符，让用户从键盘输入命令，所以又称为命令行环境（ `command line interface` ，简写为 `CLI` ）。`Shell` 接收到用户输入的命令，将命令送入操作系统执行，并将结果返回给用户。
+
+*   `Shell` 是一个命令解释器，解释用户输入的命令。它支持变量、条件判断、循环操作等语法，所以用户可以用 `Shell` 命令写出各种小程序，又称为 `Shell` 脚本。这些脚本都通过`Shell` 的解释执行，而不通过编译。
+
+*   `Shell` 是一个工具箱，提供了各种小工具，供用户方便地使用操作系统的功能。
+
+`Bash` 是目前最常用的 `Shell` 。`MacOS` 中的默认 `Shell` 就是 `Bash` 。
+通过执行 `echo $SHELL` 命令可以查看到当前正在使用的 `Shell` 。还可以通过 `cat /etc/shells` 查看当前系统安装的所有 `Shell` 种类。
+
+## 命令
+
+### 命令行提示符
+
+进入命令行环境以后，用户会看到 `Shell` 的提示符。提示符往往是一串前缀，最后以一个美元符号 `$` 结尾，用户可以在这个符号后面输入各种命令。
+
+命令解析：
+
+*   `root`：表示用户名；
+
+*   `iZm5e8dsxce9ufaic7hi3uZ`：表示主机名；
+
+*   `~`：表示目前所在目录为家目录，其中 `root` 用户的家目录是 `/root` 普通用户的家目录在 `/home` 下；
+
+*   `#`：指示你所具有的权限（ `root` 用户为 `#` ，普通用户为 `$` ）。
+
+*   执行 `whoami` 命令可以查看当前用户名；
+
+*   执行 `hostname` 命令可以查看当前主机名；
+
+关于如何创建、切换、删除用户，在后面的用户与权限会具体讲解，这里先使用 `root` 用户进行演示。
+
+\[备注] `root` 是超级用户，具备操作系统的一切权限。切换到`root`：`su root`，每次登陆系统root的密码都不一样，是随机的。但可以修改。
+
+## 文件和目录
+
+### 文件的组织
+
+![](https://mmbiz.qpic.cn/mmbiz/9aPYe0E1fb12HhSLxYibr9w8y4GKAfhTDsdHVfdSgVaDqKCI68l8x9V4T8eaCrkpdP7pausTQ4IZroibUqVZ20rw/640?wx_fmt=jpeg\&wxfrom=5\&wx_lazy=1\&wx_co=1)
+
+### 查看路径
+
+#### pwd
+
+显示当前目录的路径
+
+![](https://mmbiz.qpic.cn/mmbiz/9aPYe0E1fb12HhSLxYibr9w8y4GKAfhTDic7ib74ibBX4gicwXAjlAkicqJw39ZaMFfdJuicZWHlxLkahjzFofTJqvmLQ/640?wx_fmt=jpeg\&wxfrom=5\&wx_lazy=1\&wx_co=1)
+
+#### which
+
+查看命令的可执行文件所在路径， `Linux` 下，每一条命令其实都对应一个可执行程序，在终端中输入命令，按回车的时候，就是执行了对应的那个程序， `which` 命令本身对应的程序也存在于 `Linux` 中。
+
+总的来说一个命令就是一个可执行程序。
+
+![](https://mmbiz.qpic.cn/mmbiz/9aPYe0E1fb12HhSLxYibr9w8y4GKAfhTD5ovhJcC7k10uXt0vTF6EXiaUfdsytqEFXdVk9SS18CsicQxud4r4jsOw/640?wx_fmt=jpeg\&wxfrom=5\&wx_lazy=1\&wx_co=1)
+
+### 浏览和切换目录
+
+#### ls
+
+列出文件和目录，它是 `Linux` 最常用的命令之一。
+
+【常用参数】
+
+*   `-a` 显示所有文件和目录包括隐藏的
+
+*   `-l` 显示详细列表
+
+*   `-h` 适合人类阅读的
+
+*   `-t` 按文件最近一次修改时间排序
+
+*   `-i` 显示文件的 `inode` （ `inode` 是文件内容的标识）
+
+![](https://mmbiz.qpic.cn/mmbiz/9aPYe0E1fb12HhSLxYibr9w8y4GKAfhTDk1zO8NTYSlUptStW4R7BWWEFthyR9ibS3siapAicwP6Cagzj4UDaIXGhw/640?wx_fmt=jpeg\&wxfrom=5\&wx_lazy=1\&wx_co=1)
+
+#### cd
+
+`cd` 是英语 `change directory` 的缩写，表示切换目录。
+
+`cd / --> 跳转到根目录   
+cd ~ --> 跳转到家目录   
+cd .. --> 跳转到上级目录   
+cd ./home --> 跳转到当前目录的home目录下   
+cd /home/lion --> 跳转到根目录下的home目录下的lion目录   
+cd --> 不添加任何参数，也是回到家目录   复制代码   `
+
+\[注意] 输入`cd /ho` + 单次 `tab` 键会自动补全路径 + 两次 `tab` 键会列出所有可能的目录列表。
+
+#### du
+
+列举目录大小信息。
+
+【常用参数】
+
+*   `-h` 适合人类阅读的；
+
+*   `-a` 同时列举出目录下文件的大小信息；
+
+*   `-s` 只显示总计大小，不显示具体信息。
+
+### 浏览和创建文件
+
+#### cat
+
+一次性显示文件所有内容，更适合查看小的文件。
+
+`cat cloud-init.log   复制代码   `
+
+【常用参数】
+
+*   `-n` 显示行号。
+
+#### less
+
+分页显示文件内容，更适合查看大的文件。
+
+`less cloud-init.log   复制代码   `
+
+【快捷操作】
+
+*   空格键：前进一页（一个屏幕）；
+
+*   `b` 键：后退一页；
+
+*   回车键：前进一行；
+
+*   `y` 键：后退一行；
+
+*   上下键：回退或前进一行；
+
+*   `d` 键：前进半页；
+
+*   `u` 键：后退半页；
+
+*   `q` 键：停止读取文件，中止 `less` 命令；
+
+*   `=` 键：显示当前页面的内容是文件中的第几行到第几行以及一些其它关于本页内容的详细信息；
+
+*   `h` 键：显示帮助文档；
+
+*   `/` 键：进入搜索模式后，按 `n` 键跳到一个符合项目，按 `N` 键跳到上一个符合项目，同时也可以输入正则表达式匹配。
+
+#### head
+
+显示文件的开头几行（默认是10行）
+
+`head cloud-init.log   复制代码   `
+
+【参数】
+
+*   `-n` 指定行数 `head cloud-init.log -n 2`
+
+#### tail
+
+显示文件的结尾几行（默认是10行）
+
+`tail cloud-init.log复制代码   `
+
+【参数】
+
+*   `-n` 指定行数 `tail cloud-init.log -n 2`
+
+*   `-f` 会每过1秒检查下文件是否有更新内容，也可以用 `-s` 参数指定间隔时间 `tail -f -s 4 xxx.log`
+
+#### touch
+
+创建一个文件
+
+`touch new_file复制代码   `
+
+#### mkdir
+
+创建一个目录
+
+`mkdir new_folder复制代码   `
+
+【常用参数】
+
+*   `-p` 递归的创建目录结构 `mkdir -p one/two/three`
+
+### 文件的复制和移动
+
+#### cp
+
+拷贝文件和目录
+
+```c
+cp file file_copy --> file 是目标文件，file_copy 是拷贝出来的文件
+cp file one --> 把 file 文件拷贝到 one 目录下，并且文件名依然为 file
+cp file one/file_copy --> 把 file 文件拷贝到 one 目录下，文件名为file_copy
+cp *.txt folder --> 把当前目录下所有 txt 文件拷贝到 folder 目录下复制代码   
+```
+
+【常用参数】
+
+*   `-r` 递归的拷贝，常用来拷贝一整个目录
+
+#### mv
+
+移动（重命名）文件或目录，与cp命令用法相似。
+
+```c
+mv file one --> 将 file 文件移动到 one 目录下
+mv new_folder one --> 将 new_folder 文件夹移动到one目录下
+mv *.txt folder --> 把当前目录下所有 txt 文件移动到 folder 目录下
+mv file new_file --> file 文件重命名为 new_file复制代码   
+```
+
+### 文件的删除和链接
+
+#### rm
+
+删除文件和目录，由于 `Linux` 下没有回收站，一旦删除非常难恢复，因此需要谨慎操作
+
+```c
+rm new_file  --> 删除 new_file 文件
+rm f1 f2 f3  --> 同时删除 f1 f2 f3 3个文件复制代码   
+```
+
+【常用参数】
+
+*   `-i` 向用户确认是否删除；
+
+*   `-f` 文件强制删除；
+
+*   `-r` 递归删除文件夹，著名的删除操作 `rm -rf` 。
+
+#### ln
+
+英文 `Link` 的缩写，表示创建链接。
+
+学习创建链接之前，**首先要理解链接是什么**，我们先来看看 `Linux` 的文件是如何存储的：
+
+`Linux` 文件的存储方式分为3个部分，文件名、文件内容以及权限，其中文件名的列表是存储在硬盘的其它地方和文件内容是分开存放的，每个文件名通过 `inode` 标识绑定到文件内容。
+
+Linux 下有两种链接类型：硬链接和软链接。
+
+#### 硬链接
+
+使链接的两个文件共享同样文件内容，就是同样的 `inode` ，一旦文件1和文件2之间有了硬链接，那么修改任何一个文件，修改的都是同一块内容，它的缺点是，只能创建指向文件的硬链接，不能创建指向目录的（其实也可以，但比较复杂）而软链接都可以，因此软链接使用更加广泛。
+
+```c
+ln file1 file2  --> 创建 file2 为 file1 的硬链接复制代码 
+```
+
+![](https://mmbiz.qpic.cn/mmbiz/9aPYe0E1fb12HhSLxYibr9w8y4GKAfhTDefy14gyK7BcCLpEdwOKzTXcOStZOVy1mfY4AS462pbQ6iaOj5pqEoNQ/640?wx_fmt=jpeg\&wxfrom=5\&wx_lazy=1\&wx_co=1)
+
+如果我们用 `rm file1` 来删除 `file1` ，对 `file2` 没有什么影响，对于硬链接来说，删除任意一方的文件，共同指向的文件内容并不会从硬盘上删除。只有同时删除了 `file1` 与`file2` 后，它们共同指向的文件内容才会消失。
+
+#### 软链接
+
+软链接就类似 `windows` 下快捷方式。
+
+```c
+ln -s file1 file2复制代码   
+```
+
+![](https://mmbiz.qpic.cn/mmbiz/9aPYe0E1fb12HhSLxYibr9w8y4GKAfhTDnmrlUBQiaRyufJdTZnSoDUYlBgPQWnbGzyJl9NB9hPUfZtPOlQM5Yibg/640?wx_fmt=jpeg\&wxfrom=5\&wx_lazy=1\&wx_co=1)
+
+执行 `ls -l` 命名查看当前目录下文件的具体信息
+
+```c
+total 0-rw-r--r-- 1 root root 0 Jan 14 06:29 file1lrwxrwxrwx 1 root root 5 Jan 14 06:42 file2 -> file1  # 表示file2 指向 file1复制代码   
+```
+
+其实 `file2` 只是 `file1` 的一个快捷方式，它指向的是 `file1` ，所以显示的是 `file1` 的内容，但其实 `file2` 的 `inode` 与 `file1` 并不相同。如果我们删除了 `file2` 的话， `file1`是不会受影响的，但如果删除 `file1` 的话， `file2` 就会变成死链接，因为指向的文件不见了。
+
+## 用户与权限
+
+### 用户
+
+`Linux` 是一个多用户的操作系统。在 `Linux` 中，理论上来说，我们可以创建无数个用户，但是这些用户是被划分到不同的群组里面的，有一个用户，名叫 `root` ，是一个很特殊的用户，它是超级用户，拥有最高权限。
+
+![](https://mmbiz.qpic.cn/mmbiz/9aPYe0E1fb12HhSLxYibr9w8y4GKAfhTDx0E1bKqKcauyxXb4trTYbYe2v6EOn6fExWbmwCOleUUvPiatlHiaLJJg/640?wx_fmt=jpeg\&wxfrom=5\&wx_lazy=1\&wx_co=1)
+
+自己创建的用户是有限权限的用户，这样大大提高了 `Linux` 系统的安全性，有效防止误操作或是病毒攻击，但是我们执行的某些命令需要更高权限时可以使用 `sudo` 命令。
+
+#### sudo
+
+以 `root` 身份运行命令
+
+```c
+sudo date  --> 当然查看日期是不需要sudo的这里只是演示，sudo 完之后一般还需要输入用户密码的复制代码   
+```
+
+#### useradd + passwd
+
+*   `useradd` 添加新用户
+
+*   `passwd` 修改用户密码
+
+这两个命令需要 `root` 用户权限
+
+```c
+useradd lion --> 添加一个lion用户，添加完之后在 /home 路径下可以查看passwd lion --> 修改lion用户的密码复制代码   
+```
+
+#### userdel
+
+删除用户，需要 `root` 用户权限
+
+```c
+userdel lion --> 只会删除用户名，不会从/home中删除对应文件夹userdel lion -r --> 会同时删除/home下的对应文件夹复制代码 
+```
+
+#### su
+
+切换用户，需要 `root` 用户权限
+
+```c
+sudo su --> 切换为root用户（exit 命令或 CTRL + D 快捷键都可以使普通用户切换为 root 用户）
+su lion --> 切换为普通用户su - --> 切换为root用户复制代码   
+```
+
+### 群组的管理
+
+`Linux` 中每个用户都属于一个特定的群组，如果你不设置用户的群组，默认会创建一个和它的用户名一样的群组，并且把用户划归到这个群组。
+
+#### groupadd
+
+创建群组，用法和 `useradd` 类似。
+
+```c
+groupadd friends复制代码   
+```
+
+#### groupdel
+
+删除一个已存在的群组
+
+```c
+groupdel foo  --> 删除foo群组复制代码   
+```
+
+#### groups
+
+查看用户所在群组
+
+```c
+groups lion  --> 查看 lion 用户所在的群组复制代码
+```
+
+#### usermod
+
+用于修改用户的账户。
+
+【常用参数】
+
+*   `-l` 对用户重命名。需要注意的是 `/home` 中的用户家目录的名字不会改变，需要手动修改。
+
+*   `-g` 修改用户所在的群组，例如 `usermod -g friends lion`修改 `lion` 用户的群组为 `friends` 。
+
+*   `-G` 一次性让用户添加多个群组，例如 `usermod -G friends,foo,bar lion` 。
+
+*   `-a` `-G` 会让你离开原先的群组，如果你不想这样做的话，就得再添加 `-a` 参数，意味着`append` 追加的意思。
+
+#### chgrp
+
+用于修改文件的群组。
+
+```c
+chgrp bar file.txt --> file.txt文件的群组修改为bar复制代码 
+```
+
+#### chown
+
+改变文件的所有者，需要 `root` 身份才能运行。
+
+```bash
+chown lion file.txt --> 把其它用户创建的file.txt转让给lion用户chown lion:bar file.txt --> 把file.txt的用户改为lion，群组改为bar复制代码   
+```
+
+【常用参数】
+
+*   `-R` 递归设置子目录和子文件， `chown -R lion:lion /home/frank` 把 `frank` 文件夹的用户和群组都改为 `lion` 。
+
+### 文件权限管理
+
+#### chmod
+
+修改访问权限。
+
+```bash
+chmod 740 file.txt
+```
+
+【常用参数】
+
+*   `-R` 可以递归地修改文件访问权限，例如 `chmod -R 777 /home/lion`
+
+修改权限的确简单，但是理解其深层次的意义才是更加重要的。下面我们来系统的学习`Linux` 的文件权限。
+
+```bash
+[root@lion ~]# ls -ldrwxr-xr-x 5 root root 4096 Apr 13  2020 climblrwxrwxrwx 1 root root    7 Jan 14 06:41 hello2.c -> hello.c-rw-r--r-- 1 root root  149 Jan 13 06:14 hello.c复制代码   
+```
+
+其中 `drwxr-xr-x` 表示文件或目录的权限。让我们一起来解读它具体代表什么？
+
+*   `d` ：表示目录，就是说这是一个目录，普通文件是 `-` ，链接是 `l` 。
+
+*   `r` ：`read` 表示文件可读。
+
+*   `w` ：`write` 表示文件可写，一般有写的权限，就有删除的权限。
+
+*   `x` ：`execute` 表示文件可执行。
+
+*   `-` ：表示没有相应权限。
+
+权限的整体是按用户来划分的，如下图所示：
+
+![](https://mmbiz.qpic.cn/mmbiz/9aPYe0E1fb12HhSLxYibr9w8y4GKAfhTDNHjwSKdibbHRmf7PrjuxDSSGmlJcw3TibY3dxFU9hm783e6bibg3jzpsw/640?wx_fmt=jpeg\&wxfrom=5\&wx_lazy=1\&wx_co=1)
+
+现在再来理解这句权限 `drwxr-xr-x` 的意思：
+
+*   它是一个文件夹；
+
+*   它的所有者具有：读、写、执行权限；
+
+*   它的群组用户具有：读、执行的权限，没有写的权限；
+
+*   它的其它用户具有：读、执行的权限，没有写的权限。
+
+现在理解了权限，我们使用 `chmod` 来尝试修改权限。`chmod` 它不需要是 `root` 用户才能运行的，只要你是此文件所有者，就可以用 `chmod` 来修改文件的访问权限。
+
+#### 数字分配权限
+
+| 权限 | 数字 |
+| -- | -- |
+| r  | 4  |
+| w  | 2  |
+| x  | 1  |
+
+因此要改变权限，只要做一些简单的加法就行：
+
+```bash
+chmod 640 hello.c # 分析6 = 4 + 2 + 0 表示所有者具有 rw 权限4 = 4 + 0 + 0 表示群组用户具有 r 权限0 = 0 + 0 + 0 表示其它用户没有权限对应文字权限为：-rw-r-----复制代码
+```
+
+#### 用字母来分配权限
+
+*   `u` ：`user` 的缩写，用户的意思，表示所有者。
+
+*   `g` ：`group` 的缩写，群组的意思，表示群组用户。
+
+*   `o` ：`other` 的缩写，其它的意思，表示其它用户。
+
+*   `a` ：`all` 的缩写，所有的意思，表示所有用户。
+
+*   `+` ：加号，表示添加权限。
+
+*   `-` ：减号，表示去除权限。
+
+*   `=` ：等于号，表示分配权限。
+
+```bash
+chmod u+rx file --> 文件file的所有者增加读和运行的权限
+chmod g+r file --> 文件file的群组用户增加读的权限
+chmod o-r file --> 文件file的其它用户移除读的权限
+chmod g+r o-r file --> 文件file的群组用户增加读的权限，其它用户移除读的权限
+chmod go-r file --> 文件file的群组和其他用户移除读的权限
+chmod +x file --> 文件file的所有用户增加运行的权限
+chmod u=rwx,g=r,o=- file --> 文件file的所有者分配读写和执行的权限，群组其它用户分配读的权限，其他用户没有任何权限复制代码   
+```
+
+## 查找文件
+
+### locate
+
+搜索包含关键字的所有文件和目录。后接需要查找的文件名，也可以用正则表达式。
+
+#### 安装 locate
+
+`yum -y install mlocate --> 安装包updatedb --> 更新数据库复制代码locate file.txtlocate fil*.txt复制代码   `
+
+\[注意] `locate` 命令会去文件数据库中查找命令，而不是全磁盘查找，因此刚创建的文件并不会更新到数据库中，所以无法被查找到，可以执行 `updatedb` 命令去更新数据库。
+
+### find
+
+用于查找文件，它会去遍历你的实际硬盘进行查找，而且它允许我们对每个找到的文件进行后续操作，功能非常强大。
+
+`find <何处> <何物> <做什么>复制代码   `
+
+*   何处：指定在哪个目录查找，此目录的所有子目录也会被查找。
+
+*   何物：查找什么，可以根据文件的名字来查找，也可以根据其大小来查找，还可以根据其最近访问时间来查找。
+
+*   做什么：找到文件后，可以进行后续处理，如果不指定这个参数， `find` 命令只会显示找到的文件。
+
+#### 根据文件名查找
+
+`find -name "file.txt" --> 当前目录以及子目录下通过名称查找文件find . -name "syslog" --> 当前目录以及子目录下通过名称查找文件find / -name "syslog" --> 整个硬盘下查找syslogfind /var/log -name "syslog" --> 在指定的目录/var/log下查找syslog文件find /var/log -name "syslog*" --> 查找syslog1、syslog2 ... 等文件，通配符表示所有find /var/log -name "*syslog*" --> 查找包含syslog的文件 复制代码   `
+
+\[注意] `find` 命令只会查找完全符合 “何物” 字符串的文件，而 `locate` 会查找所有包含关键字的文件。
+
+#### 根据文件大小查找
+
+`find /var -size +10M --> /var 目录下查找文件大小超过 10M 的文件find /var -size -50k --> /var 目录下查找文件大小小于 50k 的文件find /var -size +1G --> /var 目录下查找文件大小查过 1G 的文件find /var -size 1M --> /var 目录下查找文件大小等于 1M 的文件复制代码   `
+
+#### 根据文件最近访问时间查找
+
+`find -name "*.txt" -atime -7  --> 近 7天内访问过的.txt结尾的文件复制代码   `
+
+#### 仅查找目录或文件
+
+`find . -name "file" -type f  --> 只查找当前目录下的file文件find . -name "file" -type d  --> 只查找当前目录下的file目录复制代码   `
+
+#### 操作查找结果
+
+`find -name "*.txt" -printf "%p - %u\n" --> 找出所有后缀为txt的文件，并按照 %p - %u\n 格式打印，其中%p=文件名，%u=文件所有者find -name "*.jpg" -delete --> 删除当前目录以及子目录下所有.jpg为后缀的文件，不会有删除提示，因此要慎用find -name "*.c" -exec chmod 600 {} \; --> 对每个.c结尾的文件，都进行 -exec 参数指定的操作，{} 会被查找到的文件替代，\; 是必须的结尾find -name "*.c" -ok chmod 600 {} \; --> 和上面的功能一直，会多一个确认提示复制代码   `
