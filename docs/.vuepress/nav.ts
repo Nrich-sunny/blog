@@ -21,6 +21,12 @@ export default [
         ],
     },
     {
+        text: '中间件',
+        items: [
+            { text: 'Redis', link: '/redis/' }
+        ],
+    },
+    {
         text: '网络',
         items: [
             { text: '路由劫持', link: '/route-hijack/' }, 
