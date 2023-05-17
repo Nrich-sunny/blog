@@ -23,7 +23,8 @@ export default [
     {
         text: '中间件',
         items: [
-            { text: 'Redis', link: '/redis/' }
+            { text: 'Redis', link: '/redis/' },
+            { text: 'MySQL', link: '/mysql/' },
         ],
     },
     {
