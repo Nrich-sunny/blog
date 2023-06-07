@@ -18,7 +18,8 @@ export default [
         items: [
             { text: 'Git', link: '/git/' }, 
             { text: 'Linux', link: '/linux/' }, 
-            { text: 'DataStructure', link: '/datastructure/'},
+            { text: 'DataStructure', link: '/datastructure/' },
+            { text: 'CloudNative', link: '/cloudnative/'},
         ],
     },
     {
