@@ -5,6 +5,7 @@ export default [
         items: [
             { text: 'Java', link: '/java/' },
             { text: 'Golang', link: '/go/' },
+            { text: 'Netty', link: '/netty/' },
         ],
     },
     {
